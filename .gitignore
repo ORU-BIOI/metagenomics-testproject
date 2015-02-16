@@ -2,3 +2,4 @@ miniconda.sh
 miniconda
 hmasm*
 .snakemake
+jobs.log

@@ -38,8 +38,8 @@ rule hmp_body_reads_md5:
     input:
         body = "{dataset}_{bodysite}.csv"
     output:
-        md5 = dynamic("{dataset}/{bodysite}/{samples}.bz2.md5"),
-        url = dynamic(temp("{dataset}/{bodysite}/{samples}.bz2.url"))
+        md5 = dynamic("{dataset}/{bodysite}/{samples}.tar.bz2.md5"),
+        url = dynamic(temp("{dataset}/{bodysite}/{samples}.tar.bz2.url"))
     params:
         path = "{dataset}/{bodysite}/"
     run:
@@ -57,14 +57,14 @@ rule hmp_body_reads_md5:
                         continue
 
             print(t_md5,file=open(f_md5,"x"))
-            print("/".join(r.wga_base.split("/")[1:]),file=open(f_url,"x"))
+            print("/".join(r.wgs_base.split("/")[1:]),file=open(f_url,"x"))
 
 rule hmp_body_assembly_md5:
     input:
         body = "{dataset}_{bodysite}.csv"
     output:
-        md5 = dynamic("{dataset}/{bodysite}/{samples}.bz2.md5"),
-        url = dynamic(temp("{dataset}/{bodysite}/{samples}.bz2.url"))
+        md5 = dynamic("{dataset}/{bodysite}/{samples}.f.?a.bz2.md5"),
+        url = dynamic(temp("{dataset}/{bodysite}/{samples}.f.?a.bz2.url"))
     params:
         path = "{dataset}/{bodysite}/"
     run:
