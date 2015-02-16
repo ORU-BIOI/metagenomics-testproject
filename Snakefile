@@ -1,4 +1,4 @@
-#localrules: all, hmp_all_csv, hmp_body_csv, hmp_body_assembly_md5
+localrules: all, hmp_all_csv, hmp_body_csv, hmp_body_assembly_md5
 import os
 import json
 import pandas as pd
@@ -11,12 +11,15 @@ def mkdir(path_to_dir):
     if not os.path.isdir(path_to_dir):
         os.makedirs(path_to_dir)
 
-
-rule hmp_stool_data:
+rule hmp_stool_reads_data:
     input: 
-        dynamic("hmasm/stool/{samples}.bz2"),
+        dynamic("hmasm/stool/{samples}.tar.bz2"),
 
-rule hmp_body_assembly_download:
+rule hmp_stool_assembly_data:
+    input: 
+        dynamic("hmasm/stool/{samples}.f.?a.bz2"),
+
+rule hmp_body_download:
     input:
         md5 = "{dataset}/{bodysite}/{sample}.bz2.md5",
         url = "{dataset}/{bodysite}/{sample}.bz2.url"
@@ -30,6 +33,31 @@ rule hmp_body_assembly_download:
         url = hmp_base_url.format("downloads.",postfix)
         md5 = os.path.basename(input.md5)
         shell("wget -O {output.sample} {url}; touch {output.sample}; cd {params.path} && md5sum -c {md5}")
+
+rule hmp_body_reads_md5:
+    input:
+        body = "{dataset}_{bodysite}.csv"
+    output:
+        md5 = dynamic("{dataset}/{bodysite}/{samples}.bz2.md5"),
+        url = dynamic(temp("{dataset}/{bodysite}/{samples}.bz2.url"))
+    params:
+        path = "{dataset}/{bodysite}/"
+    run:
+        body = pd.read_csv(input.body).iloc[:10,:]
+        mkdir(params.path)
+        for i,r in body.iterrows():
+            filename = params.path+os.path.basename(r.wgs_base)
+            f_md5 = filename + ".md5"
+            f_url = filename + ".url"
+            t_md5 = "{}  {}".format(r.wgs_md5,os.path.basename(filename))
+
+            if os.path.isfile(f_md5):
+                with open(f_md5) as fh:
+                    if fh.read().strip() == t_md5.strip():
+                        continue
+
+            print(t_md5,file=open(f_md5,"x"))
+            print("/".join(r.wga_base.split("/")[1:]),file=open(f_url,"x"))
 
 rule hmp_body_assembly_md5:
     input:
@@ -58,7 +86,7 @@ rule hmp_body_assembly_md5:
 
 rule hmp_body_csv:
     input:
-        all = "{dataset}_all.csv",
+        all = "hmasm_all.csv",
     output:
         body = "{dataset}_{bodysite}.csv",
         body_nulls = "{dataset}_{bodysite}_nulls.csv",
