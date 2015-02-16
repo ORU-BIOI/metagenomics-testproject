@@ -46,7 +46,7 @@ rule hmp_body_assembly_md5:
             filename = params.path+os.path.basename(r.pga_base)
             f_md5 = filename + ".md5"
             f_url = filename + ".url"
-            t_md5 = "{}\t{}".format(r.pga_md5,os.path.basename(filename))
+            t_md5 = "{}  {}".format(r.pga_md5,os.path.basename(filename))
 
             if os.path.isfile(f_md5):
                 with open(f_md5) as fh:
