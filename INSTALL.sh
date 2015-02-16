@@ -3,7 +3,7 @@
 if [[ -f miniconda.sh ]]; then
 	echo "Using previously downloaded miniconda.sh"
 else
-	python GetMiniconda.py | xargs wget -O miniconda.sh
+	python INSTALL.py | xargs wget -O miniconda.sh
 	chmod u+x miniconda.sh
 fi
 
