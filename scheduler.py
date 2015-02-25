@@ -86,7 +86,7 @@ class SnakeJobSbatch(SnakeJob):
                     'partition': rule_conf['partition'],
                     'cores': rule_conf['cores'],
                     'account': self.config['sbatch_general']['account'],
-                    'log_file': self.ofiles[0] + '-slurm.out' if len(self.ofiles) > 0 else 'snakemake-{0}-slurm.out'.format(self.rule),
+                    'log_file': self.ofiles[0].strip("/") + '-slurm.out' if len(self.ofiles) > 0 else 'snakemake-{0}-slurm.out'.format(self.rule),
                     'extra_parameters': rule_conf.get('extra_parameters', "")
             }
             sbatch_cmd = """sbatch --output={log_file} {dep_str} -A {account} -p {partition} -n {cores} -t {days}-{hours}:{minutes}:00 \

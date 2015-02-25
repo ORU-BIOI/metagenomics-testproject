@@ -3,3 +3,6 @@ miniconda
 hmasm*
 .snakemake
 jobs.log
+bin
+opt
+*.out

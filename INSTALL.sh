@@ -30,3 +30,17 @@ pip install snakemake
 source deactivate
 
 export PATH=$p
+
+mkdir opt
+cd opt
+git clone https://github.com/najoshi/sickle && cd sickle && make && cd .. 
+wget http://archive.lbzip2.org/lbzip2-2.5.tar.gz && tar -xvf lbzip2-2.5.tar.gz  && cd lbzip2-2.5 && ./configure && make check && make && cd ..
+cd ..
+
+mkdir bin
+cd bin
+ln -s ../opt/sickle/sickle . 
+ln -s ../opt/lbzip2-2.5/src/lbzip2 . 
+cp /proj/g2014113/metagenomics/virt-env/mg-workshop/bin/shuffleSequences_fastq.pl .
+cd ..
+
