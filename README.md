@@ -1,3 +1,6 @@
+## metagenomics-workflow ##
+A workflow for metagenomics analysis
+
 ###Install###
 Running [INSTALL.sh](https://bitbucket.org/orebro-ngbi/microbiome-workflow/raw/master/INSTALL.sh) should create two virtual python environments, sci2 and sci3 which are python2 and python3 environments respectively. Snakemake requires python3.
 
