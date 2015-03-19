@@ -1,0 +1,135 @@
+{
+    "trimmomatic_rules": {
+        "jar": "/sw/apps/bioinfo/trimmomatic/0.32/milou/trimmomatic.jar",
+        "trim_params": {
+            "TruSeq3-m2-pe30-se10-minlen36": "ILLUMINACLIP:/sw/apps/bioinfo/trimmomatic/0.32/milou/adapters/TruSeq3-PE-2.fa:2:30:10 MINLEN:36",
+            "TruSeq3-m2-pe15-se05-minlen36": "ILLUMINACLIP:/sw/apps/bioinfo/trimmomatic/0.32/milou/adapters/TruSeq3-PE-2.fa:2:15:5 MINLEN:36",
+            "TruSeq3-m4-pe30-se10-minlen36": "ILLUMINACLIP:/sw/apps/bioinfo/trimmomatic/0.32/milou/adapters/TruSeq3-PE-2.fa:4:30:10 MINLEN:36",
+            "TruSeq3-m4-pe15-se05-minlen36": "ILLUMINACLIP:/sw/apps/bioinfo/trimmomatic/0.32/milou/adapters/TruSeq3-PE-2.fa:4:15:5 MINLEN:36"
+        }
+    },
+    "fastqc_rules": {
+        "load_env": "module load bioinfo-tools FastQC/0.11.1"
+    },
+    "bowtie2_rules": {
+        "platform": "Illumina",
+        "mapping_params": {
+            "default": ""
+        },
+        "samples": {
+            "SRS013215": ["SRS013215"],
+            "SRS013476": ["SRS013476"]
+        },
+        "_ignore": {
+            "SRS014459": ["SRS014459"],
+            "SRS015065": ["SRS015065"],
+            "SRS015854": ["SRS015854"],
+            "SRS016203": ["SRS016203"],
+            "SRS056259": ["SRS056259"],
+            "SRS058770": ["SRS058770"],
+            "SRS062427": ["SRS062427"],
+            "SRS063985": ["SRS063985"]
+        },
+        "units": {
+            "SRS013215":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS013215.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS013215.2.fastq.gz"],
+            "SRS013476":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS013476.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS013476.2.fastq.gz"]
+        },
+        "_ignore": {
+            "SRS014459":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS014459.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS014459.2.fastq.gz"],
+            "SRS015065":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS015065.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS015065.2.fastq.gz"],
+            "SRS015854":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS015854.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS015854.2.fastq.gz"],
+            "SRS016203":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS016203.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS016203.2.fastq.gz"],
+            "SRS056259":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS056259.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS056259.2.fastq.gz"],
+            "SRS058770":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS058770.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS058770.2.fastq.gz"],
+            "SRS062427":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS062427.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS062427.2.fastq.gz"],
+            "SRS063985":
+                ["/proj/b2014206/microbiome-workflow/reads/SRS063985.1.fastq.gz",
+                 "/proj/b2014206/microbiome-workflow/reads/SRS063985.2.fastq.gz"]
+        },
+        "load_env": "module load bioinfo-tools bowtie2/2.2.3 samtools/1.1"
+    },
+    "ray_rules" : {
+        "assembly_params": {
+            "default": ""
+        },
+        "kmers": [
+            "31",
+            "41",
+            "51",
+            "61",
+            "71",
+            "81"
+        ],
+        "mpi_cmd": "mpiexec -n 64",
+        "load_env": "module load bioinfo-tools Ray/2.3.0"
+    },
+    "assembly_merge_rules": {
+        "load_env": "export METASSEMBLE_DIR=/pica/v9/b2014206/microbiome-workflow/opt/metassemble && source activate sci2 && module load bioinfo-tools 454-dataanalysis/2.6"
+    },
+    "concoct_rules": {
+        "load_env": "source activate sci2 && module load bioinfo-tools MUMmer/3.23 gsl/1.16 # CONCOCT dev f4cb9fcb",
+        "mapper": "bowtie2",
+        "mapping_params": "default",
+        "concoct_params": {
+            "cutoff-500-maxcluster-400": "-c 400 -l 500",
+            "cutoff-700-maxcluster-400": "-c 400 -l 700",
+            "cutoff-1000-maxcluster-400": "-c 400 -l 1000",
+            "cutoff-2000-maxcluster-400": "-c 400 -l 2000",
+            "cutoff-3000-maxcluster-400": "-c 400 -l 3000"
+        },
+        "scripts_dir": "/pica/v9/b2014206/microbiome-workflow/opt/CONCOCT/scripts"
+    },
+    "samtools_rules": {
+        "picard_jars": "/pica/v9/b2014206/microbiome-workflow/opt/picard-tools-1.129/picard.jar",
+        "load_env": "module load bioinfo-tools samtools/0.1.19 BEDTools/2.21.0"
+    },
+    "prodigal_rules": {
+        "load_env": "module load bioinfo-tools prodigal/2.60",
+        "prodigal_params": {
+            "default-meta": "-p meta"
+        }
+    },
+    "rpsblast_rules": {
+        "load_env": "module load bioinfo-tools blast/2.2.29+ gnuparallel/20140222",
+        "rpsblast_params": {
+            "default-concoct": "-outfmt '6 qseqid sseqid evalue pident score qstart qend sstart send length slen' -max_target_seqs 1 -evalue 0.001"
+        },
+        "databases": {
+            "cog": "/sw/data/uppnex/cdd/little_endian/Cog"
+        },
+        "parallel_params": "-N 10 --env PATH"
+    },
+    "hmmer_rules": {
+        "load_env": "module load bioinfo-tools hmmer/3.1b1-gcc",
+        "hmmer_params": {
+            "default-concoct": "-E 0.0001 --cpu 16"
+        },
+        "databases": {
+            "all_pog": "/proj/b2010008/nobackup/database/pog/hmmer/3.1b1/databases/all_pog.hmm"
+        }
+    },
+    "assembly_report_rules": {
+        "load_env": "source activate sci2"
+    },
+    "mapping_report_rules": {
+        "load_env": "source activate sci2"
+    }
+}

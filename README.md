@@ -11,9 +11,18 @@ To download the published stool assemblies from the [HMP](http://hmpdacc.org/res
 #!bash
 snakemake -j 4 hmp_stool_data
 ```
-or to run it parallel on cluster cores
+or to run it parallel on clusters
 ```
 #!bash
 ./scheduler.sh hmp_stool_data
 ```
 This is possible since the rule has been defined in the [config](https://bitbucket.org/orebro-ngbi/microbiome-workflow/raw/master/scheduler.conf) file for the snakemake scheduler.
+
+###Convert .tar.bz2 to .fastq.gz files, which are inputs to workflow###
+The reads from a sample are in .tar.bz2 files. Each such files contains *strand_1*.fastq, *strand_2*.fastq and *singletons*.fastq. So to uncompress and untar them and to compress them again, run rule untar:
+
+```
+#!bash
+./scheduler.sh untar
+```
+
