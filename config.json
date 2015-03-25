@@ -32,37 +32,37 @@
         },
         "units": {
             "SRS013215":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS013215.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS013215.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS013215.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS013215.2.fastq.gz"],
             "SRS013476":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS013476.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS013476.2.fastq.gz"]
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS013476.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS013476.2.fastq.gz"]
         },
         "_ignore": {
             "SRS014459":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS014459.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS014459.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS014459.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS014459.2.fastq.gz"],
             "SRS015065":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS015065.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS015065.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS015065.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS015065.2.fastq.gz"],
             "SRS015854":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS015854.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS015854.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS015854.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS015854.2.fastq.gz"],
             "SRS016203":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS016203.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS016203.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS016203.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS016203.2.fastq.gz"],
             "SRS056259":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS056259.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS056259.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS056259.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS056259.2.fastq.gz"],
             "SRS058770":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS058770.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS058770.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS058770.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS058770.2.fastq.gz"],
             "SRS062427":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS062427.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS062427.2.fastq.gz"],
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS062427.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS062427.2.fastq.gz"],
             "SRS063985":
-                ["/proj/b2014206/microbiome-workflow/reads/SRS063985.1.fastq.gz",
-                 "/proj/b2014206/microbiome-workflow/reads/SRS063985.2.fastq.gz"]
+                ["/proj/b2014206/metagenomics-workflow/reads/SRS063985.1.fastq.gz",
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS063985.2.fastq.gz"]
         },
         "load_env": "module load bioinfo-tools bowtie2/2.2.3 samtools/1.1"
     },
@@ -82,7 +82,7 @@
         "load_env": "module load bioinfo-tools Ray/2.3.0"
     },
     "assembly_merge_rules": {
-        "load_env": "export METASSEMBLE_DIR=/pica/v9/b2014206/microbiome-workflow/opt/metassemble && source activate sci2 && module load bioinfo-tools 454-dataanalysis/2.6"
+        "load_env": "export METASSEMBLE_DIR=/pica/v9/b2014206/metagenomics-workflow/opt/metassemble && source activate sci2 && module load bioinfo-tools 454-dataanalysis/2.6"
     },
     "concoct_rules": {
         "load_env": "source activate sci2 && module load bioinfo-tools MUMmer/3.23 gsl/1.16 # CONCOCT dev f4cb9fcb",
@@ -95,10 +95,10 @@
             "cutoff-2000-maxcluster-400": "-c 400 -l 2000",
             "cutoff-3000-maxcluster-400": "-c 400 -l 3000"
         },
-        "scripts_dir": "/pica/v9/b2014206/microbiome-workflow/opt/CONCOCT/scripts"
+        "scripts_dir": "/pica/v9/b2014206/metagenomics-workflow/opt/CONCOCT/scripts"
     },
     "samtools_rules": {
-        "picard_jars": "/pica/v9/b2014206/microbiome-workflow/opt/picard-tools-1.129/picard.jar",
+        "picard_jars": "/pica/v9/b2014206/metagenomics-workflow/opt/picard-tools-1.129/picard.jar",
         "load_env": "module load bioinfo-tools samtools/0.1.19 BEDTools/2.21.0"
     },
     "prodigal_rules": {
