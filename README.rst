@@ -20,7 +20,7 @@ After running the INSTALL.sh script, there should be a file, `source_to_add_snak
     source source_snakemake.sh
 
 
-You can deactivate the environment again with:
+You can deactivate the environment again with the following command or by exiting the terminal window:
 
 .. code-block:: bash
 
@@ -28,26 +28,34 @@ You can deactivate the environment again with:
     
 Running Snakemake
 =================
-Most rules can be run locally or submitted through sbatch. For a local run, taking the rule ``fastqc_all`` as an 
+Most rules can be run locally or submitted through sbatch. For a local run, taking the rule ``trimmomatic_all`` as an 
 example one would do:
 
 .. code-block:: bash
 
-    snakemake -j 16 --debug -p --debug fastqc_all
+    snakemake -j 16 --debug -p --debug trimmomatic_all
     
 for a run scheduled through sbatch:
 
 .. code-block:: bash
 
-    ./scheduler.sh fastqc_all
+    ./scheduler.sh trimmomatic_all
 
 You can always do a dry-run to just print the commands that will
 be run with ``-n``:
 
 .. code-block:: bash
 
-    snakemake -j 16 --debug -np --debug fastqc_all
-    ./scheduler.sh -n fastqc_all
+    snakemake -j 16 --debug -np --debug trimmomatic_all
+    ./scheduler.sh -n trimmomatic_all
+
+Trimmomatic
+===========
+Remove adapters with trimmomatic through sbatch:
+
+.. code-block:: bash
+
+    ./scheduler.sh trimmomatic_all
 
 FastQC
 =====================
@@ -65,13 +73,6 @@ Generate report with:
     snakemake -j 1 -p --debug --rerun-incomplete fastqc_report report
     
 
-Trimmomatic
-===========
-Removed adapters with trimmomatic through sbatch. Same as before just change the rule name to trimmomatic_all:
-
-.. code-block:: bash
-
-    ./scheduler.sh trimmomatic_all
 
 Assemblies
 ==============
@@ -79,19 +80,19 @@ Assemblies with Ray through sbatch over kmers 31 to 81 with a stepsize of 10 on 
 
 .. code-block:: bash
 
-    ray_assembly_all
+    ./scheduler.sh ray_assembly_all
     
 Merge the assemblies with Newbler:
 
 .. code-block:: bash
 
-    merge_newbler_all
+    ./scheduler.sh merge_newbler_all
 
 Generate report locally:
 
 .. code-block:: bash
 
-    assembly_report
+    snakemake -j 1 -p --debug --rerun-incomplete assembly_report
 
 Mapping bowtie2
 ===============
@@ -100,13 +101,13 @@ and mapped the reads back, because this is necessary for CONCOCT. One rule does 
 
 .. code-block::
 
-    concoct_map_10K_all
+    ./scheduler.sh concoct_map_10K_all
 
 Generate the report:
 
 .. code-block::
 
-    mapping_report
+    snakemake -j 1 -p --debug --rerun-incomplete mapping_report
 
 Run CONCOCT and annotation
 ==========================
@@ -114,19 +115,19 @@ Run CONCOCT through sbatch on milou with contigs bigger than 500, 700, 1000, 200
 
 .. code-block::
 
-    concoct_run_10K_all
+    ./scheduler.sh concoct_run_10K_all
 
 Predict proteins with prodigal:
 
 .. code-block::
     
-    prodigal_run_all
+    ./scheduler.sh prodigal_run_all
 
 Align the predicted proteins against the COG database:
 
 .. code-block::
 
-    rpsblast_run_all
+    ./scheduler.sh rpsblast_run_all
 
 CONCOCT binning evaluation
 ==========================
@@ -134,7 +135,7 @@ Generate Single Copy Gene plots for each bin
 
 .. code-block::
     
-    concoct_eval_cog_plot_all
+    ./scheduler.sh concoct_eval_cog_plot_all
 
 .. _POG: http://www.ncbi.nlm.nih.gov/COG/
 .. _metassemble: https://github.com/inodb/metassemble
