@@ -9,6 +9,10 @@ Install Snakemake
 ===================
 `Snakemake <https://bitbucket.org/johanneskoester/snakemake/wiki/Home>`_ has been used to make the analysis reproducible. Snakemake uses python3, and to make it simple to set up python3 with all packages that are required, running the `INSTALL.sh <https://github.com/ORU-NGBI/metagenomics-workflow/blob/master/INSTALL.sh>`_ script will create two virtual python environments from `Anaconda <https://store.continuum.io/cshop/anaconda/>`_, sci2 and sci3 which are python2 and python3 environments respectively. 
 
+.. code-block:: bash
+
+    ./INSTALL.sh
+
 After running the INSTALL.sh script, there should be a file, `source_to_add_snakemake.sh <https://github.com/ORU-NGBI/metagenomics-workflow/blob/master/source_to_add_snakemake.sh>`_ that activates the snakemake environment when sourced: 
 
 .. code-block:: bash
