@@ -121,7 +121,7 @@
         "cores": "8",
         "extra_parameters": ""
     },
-    "schedule_fastqc": "schedule_bowtie2_index",
+    "schedule_fastqc": "schedule_trimmomatic_pe",
     "schedule_create_read_symlink": "schedule_short",
     "schedule_ray_assembly_all": "schedule_short",
     "schedule_merge_newbler_all": "schedule_short",

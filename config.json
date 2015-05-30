@@ -9,7 +9,8 @@
         }
     },
     "fastqc_rules": {
-        "load_env": "module load bioinfo-tools FastQC/0.11.1"
+        "load_env": "module load bioinfo-tools FastQC/0.11.1",
+	"cpus": "16"
     },
     "bowtie2_rules": {
         "platform": "Illumina",
@@ -18,9 +19,7 @@
         },
         "samples": {
             "SRS013215": ["SRS013215"],
-            "SRS013476": ["SRS013476"]
-        },
-        "_ignore": {
+            "SRS013476": ["SRS013476"],
             "SRS014459": ["SRS014459"],
             "SRS015065": ["SRS015065"],
             "SRS015854": ["SRS015854"],
@@ -36,9 +35,7 @@
                  "/proj/b2014206/metagenomics-workflow/reads/SRS013215.2.fastq.gz"],
             "SRS013476":
                 ["/proj/b2014206/metagenomics-workflow/reads/SRS013476.1.fastq.gz",
-                 "/proj/b2014206/metagenomics-workflow/reads/SRS013476.2.fastq.gz"]
-        },
-        "_ignore": {
+                 "/proj/b2014206/metagenomics-workflow/reads/SRS013476.2.fastq.gz"],
             "SRS014459":
                 ["/proj/b2014206/metagenomics-workflow/reads/SRS014459.1.fastq.gz",
                  "/proj/b2014206/metagenomics-workflow/reads/SRS014459.2.fastq.gz"],
@@ -63,7 +60,7 @@
             "SRS063985":
                 ["/proj/b2014206/metagenomics-workflow/reads/SRS063985.1.fastq.gz",
                  "/proj/b2014206/metagenomics-workflow/reads/SRS063985.2.fastq.gz"]
-        },
+	},
         "load_env": "module load bioinfo-tools bowtie2/2.2.3 samtools/1.1"
     },
     "ray_rules" : {
