@@ -7,23 +7,29 @@ import os
 
 # add all reads to check fastqc
 config["fastqc_rules"]["reads"] = {os.path.basename(p):p for p in [v for t in config["bowtie2_rules"]["units"].values() for v in t]}
+
 # add all paired reads to run trimmomatic
 config["trimmomatic_rules"]["reads"] = config["bowtie2_rules"]["units"]
+
 # add all trimmomatic reads to fastqc
 config["fastqc_rules"]["reads"].update(
     {r.replace("/","_"):r for r in expand("trimmomatic/{trim_params}/{reads}_{ext}.fastq.gz",
         reads=config["trimmomatic_rules"]["reads"],
         trim_params=config["trimmomatic_rules"]["trim_params"], ext=["1P","2P","1U","2U"])})
+
 # add all samples and units to ray config from prefered trimmomatic parameters
 config["ray_rules"]["samples"] = config["bowtie2_rules"]["samples"]
 config["ray_rules"]["units"] = {u:expand("trimmomatic/{trim_params}/{reads}_{ext}.fastq.gz", reads=u, ext=["1P", "2P"], trim_params="TruSeq3-m4-pe30-se10-minlen36") for u in config["bowtie2_rules"]["units"]}
+
 # make merged newbler assemblies of all ray assemblies for each sample
 config["assembly_merge_rules"]["merge"] = {sample:expand("assembly/ray/{assembly_params}/{sample}/out_{kmer}/Contigs.fasta",
                                                   assembly_params="default",
                                                   kmer=config["ray_rules"]["kmers"],
                                                   sample=sample) for sample in config["ray_rules"]["samples"]}
+
 # add newbler merged assemblies to bowtie2 references for mapping
 config["bowtie2_rules"]["references"] = {m:expand("assembly/newbler/{merge}/454AllContigs.fna", merge=m) for m in config["assembly_merge_rules"]["merge"]}
+
 # add newbler merged assemblies to concoct assemblies
 config["concoct_rules"]["assemblies"] = {m:expand("assembly/newbler/{merge}/454AllContigs.fna", merge=m) for m in config["assembly_merge_rules"]["merge"]}
 
@@ -36,6 +42,7 @@ config["mapping_report_rules"]["markduplicates_metrics"] = sorted(expand("mappin
                                                                   mapping_params=config["bowtie2_rules"]["mapping_params"],
                                                                   reference=config["bowtie2_rules"]["references"],
                                                                   unit=config["bowtie2_rules"]["units"]))
+
 # Show all assemblies except the cut up ones in the assembly report
 config["assembly_report_rules"]["assemblies"] = sorted(
     expand("assembly/newbler/{merge}/454AllContigs.fna", merge=config["assembly_merge_rules"]["merge"]) +
@@ -44,8 +51,10 @@ config["assembly_report_rules"]["assemblies"] = sorted(
 
 
 
-SM_WORKFLOW_LOC="https://raw.githubusercontent.com/binnisb/snakemake-workflows/master/"
-#SM_WORKFLOW_LOC = "/glob/inod/github/snakemake-workflows/"
+#Use this for debugging with a local clone of the snakemake-workflows repository. The changes can then be pushed to online github repository
+#and the second line referencing the online repo should then be used.
+SM_WORKFLOW_LOC = "/glob/brynjar/github/snakemake-workflows/"
+#SM_WORKFLOW_LOC="https://raw.githubusercontent.com/ORU-NGBI/snakemake-workflows/master/"
 include: SM_WORKFLOW_LOC + "bio/ngs/rules/quality_control/fastqc.rules"
 include: SM_WORKFLOW_LOC + "bio/ngs/rules/trimming/trimmomatic.rules"
 include: SM_WORKFLOW_LOC + "bio/ngs/rules/assembly/ray.rules"
